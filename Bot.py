@@ -88,6 +88,10 @@ replace_list = {
         });
     });"""
 }
+@app.route('/api/hello')
+def api_hello():
+    return {'message': 'This Is Premium app bot running at clubofupsc@gmail.com'}
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def proxy(path):
