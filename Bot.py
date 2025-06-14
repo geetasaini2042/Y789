@@ -26,7 +26,7 @@ replace_list = {
     "/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js":"https://geetasaini2042.github.io/17uio/Data/App/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js",
     "/get-fresh-csrf-token":"https://getmodsapk.com/get-fresh-csrf-token",
     "/track-view/":"https://getmodsapk.com/track-view/",
-    "my_download": "https://getmodsapk.com/dl-track/",
+    "my_download": "https://geetasaini2042.github.io/17uio/Data/index.html?url=https://getmodsapk.com/dl-track/",
     'src="/storage/': 'src="https://getmodsapk.com/storage/',
     'src="/uploads/': 'src="https://geetasaini2042.github.io/17uio/Data/App/uploads/',
     '"thumbnailUrl":"/storage/': '"thumbnailUrl":"https://getmodsapk.com/storage/',
