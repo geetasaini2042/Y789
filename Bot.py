@@ -22,7 +22,7 @@ replace_list = {
     "GETMODAPK.COM":"TECH HUB",
     "GETMODSAPK.COM":"PREMIUM HUB",
     "GetModsApk":"PREMIUM HUB",
-    "/cloudflare/ads-images/":"https://sainipankaj12.serv00.net/TelegramStream.php?file_id=AgACAgUAAyEGAASQTtqMAAJL1mhNbj_k7-DVAAH8jtdND-LL19ylswACA8UxG1bUaFZdU24p1KlgsAAIAQADAgADeQAHHgQ&file_type=photo&",
+    "/cloudflare/ads-images/":"https://sainipankaj12.serv00.net/TelegramStream.php?file_id=AgACAgUAAyEGAASQTtqMAAJL12hNgeAmhYqUhToB5bKBEn8veCtuAAL9xjEbVtRwVmozxoD3eEdPAAgBAAMCAAN5AAceBA&file_type=photo&",
     "/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js":"https://geetasaini2042.github.io/17uio/Data/App/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js",
     "/get-fresh-csrf-token":"https://getmodsapk.com/get-fresh-csrf-token",
     "/track-view/":"https://getmodsapk.com/track-view/",
