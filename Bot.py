@@ -27,7 +27,7 @@ replace_list23 = {
     "/server3/cdn-cgi/challenge-platform/h/b/jsd/":"https://sainipankaj12.serv00.net/App/Pre/getmod.php/cdn-cgi/challenge-platform/h/b/jsd/",
     '/server3/wp-content/uploads/': 'https://liteapks.com/wp-content/uploads/',
     '/server3/tips/': 'https://geetasaini2042.github.io/17uio/Data/App2/tips/',
-    'https://y789.onrender.com/server2':'https://y789.onrender.com/server3',
+    '/server2':'/server3',
     'https://t.me/liteapks':"https://t.me/aibots72",
     'https://telegram.me/liteapks':"https://t.me/aibots72",
     '<script data-cfasync="false" async type="text/javascript" src="//wm.linariabigg.com/rqKZolyY2Fw/119771"></script>':"",
