@@ -21,6 +21,7 @@ replace_list23 = {
     "https://liteapks.com/?s" : "/server3/search/?s",
     "LITEAPKS.COM" :  "PREMIUM HUB",
     "LITEAPKS" : "PREMIUM HUB",
+    'target="_blank">':"",
     'action="https://liteapks.com"' : 'action="/server3/search"',
     "/server3/cloudflare/ads-images/":"https://sainipankaj12.serv00.net/TelegramStream.php?file_id=AgACAgUAAyEGAASQTtqMAAJL1mhNbj_k7-DVAAH8jtdND-LL19ylswACA8UxG1bUaFZdU24p1KlgsAAIAQADAgADeQAHHgQ&file_type=photo&",
     "/cdn-cgi/challenge-platform/":"/server3/cdn-cgi/challenge-platform/",
