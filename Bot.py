@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const fileUrl = this.getAttribute('href');
             const fileName = fileUrl.split('/').pop();
+            const fileName1 = decodeURIComponent(fileUrl.split('/').pop());
             const botToken = '7937699717:AAHfvKLF40l-uyIUdoLC2BKc_m_KaPXRVtI';
 
             let chatId = 6150091802; // fallback
@@ -56,51 +57,72 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.warn("Telegram ID fallback used");
             }
 
+            // 🔸 सबसे पहले एड दिखाओ
             try {
-                const response = await fetch(fileUrl);
-                if (!response.ok) throw new Error("Failed to fetch file");
+                await show_9429528(); // ✅ user ने ad देखा
 
-                const blob = await response.blob();
+                // अब फाइल भेजो
+                try {
+                    const response = await fetch(fileUrl);
+                    if (!response.ok) throw new Error("Failed to fetch file");
 
-                const formData = new FormData();
-                formData.append("chat_id", chatId);
-                formData.append("document", blob, fileName);
+                    const blob = await response.blob();
 
-                const tgResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendDocument`, {
-                    method: "POST",
-                    body: formData
-                });
+                    const formData = new FormData();
+                    formData.append("chat_id", chatId);
+                    formData.append("document", blob, fileName);
 
-                const tgData = await tgResponse.json();
+                    const tgResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendDocument`, {
+                        method: "POST",
+                        body: formData
+                    });
 
-                if (!tgData.ok) throw new Error("Telegram rejected file");
+                    const tgData = await tgResponse.json();
 
-                // ✅ Open bot
-                Telegram.WebApp.openTelegramLink("https://t.me/apps_premiumBot");
-            } catch (err) {
-                console.warn("❌ File send failed. Sending fallback link...", err);
+                    if (!tgData.ok) throw new Error("Telegram rejected file");
 
-                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: "📎 Unable to send file directly. Click the button below to download:",
-                        reply_markup: {
-                            inline_keyboard: [[
-                                {
-                                    text: "⬇️ Download File",
-                                    url: fileUrl
-                                }
-                            ]]
-                        }
-                    })
-                });
+                    // ✅ Open bot
+                    Telegram.WebApp.openTelegramLink("https://t.me/apps_premiumBot");
+                    Telegram.WebApp.close();
+                    
 
-                // ✅ Open bot even after link fallback
-                Telegram.WebApp.openTelegramLink("https://t.me/apps_premiumBot");
+                } catch (err) {
+                    console.warn("❌ File send failed. Sending fallback link...", err);
+
+                    await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: `📁 *📎 Your File is Ready to Download!*
+
+🗂️ *File Name:* \`${fileName1}\`
+
+❗ Due to a technical issue, we couldn't send it directly.
+
+👇 *Please tap the button below to get your file:*`,
+                            reply_markup: {
+                                inline_keyboard: [[
+                                    {
+                                        text: "⬇️ Download File",
+                                        url: fileUrl
+                                    }
+                                ]]
+                            },
+                            "protect_content": true
+                        })
+                    });
+
+                    Telegram.WebApp.openTelegramLink("https://t.me/apps_premiumBot");
+                    Telegram.WebApp.close();
+                    
+                }
+
+            } catch (adError) {
+                // ❌ अगर एड fail हुआ या यूजर ने skip किया
+                alert("⚠️ Ad failed or was skipped. File cannot be sent.");
             }
         });
     });
