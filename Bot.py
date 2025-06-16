@@ -47,36 +47,47 @@ replace_list1 = {
     <script>
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".download-button").forEach(button => {
-    const originalEncoded = button.getAttribute("data-href");
-    let decodedUrl = atob(originalEncoded);
+  const originalEncoded = button.getAttribute("data-href");
+  let decodedUrl = atob(originalEncoded);
 
-    // अगर URL के अंत में /1 नहीं है, तो जोड़ें
-    if (!decodedUrl.endsWith("/1")) {
-      if (decodedUrl.endsWith("/")) {
-        decodedUrl += "1";
-      } else {
-        decodedUrl += "/1";
-      }
+  // /1 जोड़ना सुनिश्चित करें
+  if (!decodedUrl.endsWith("/1")) {
+    if (decodedUrl.endsWith("/")) {
+      decodedUrl += "1";
+    } else {
+      decodedUrl += "/1";
     }
+  }
 
-    const newEncoded = btoa(decodedUrl);
-    button.setAttribute("data-href", newEncoded);
-    console.log("Updated data-href:", newEncoded);
-  });
+  // Premium HUB iframe URL बनाएँ
+  const iframeUrl = "https://geetasaini2042.github.io/17uio/APPS/Ifram.html?url=" + encodeURIComponent(decodedUrl);
 
-  // एड के बाद रीडायरेक्ट करें
-  document.querySelectorAll(".download-button").forEach(button => {
-    button.addEventListener("click", function (e) {
-      e.preventDefault();
+  // फिर से encode करें
+  const newEncoded = btoa(iframeUrl);
+  button.setAttribute("data-href", newEncoded);
+});
 
-      show_9429528().then(() => {
-        const decoded = atob(this.getAttribute("data-href"));
+// Click पर Telegram Mini App में open करें
+document.querySelectorAll(".download-button").forEach(button => {
+  button.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    show_9429528().then(() => {
+      const decoded = atob(this.getAttribute("data-href"));
+
+      // ✅ Mini App के अंदर URL खोलें
+      if (window.Telegram && Telegram.WebApp) {
+        Telegram.WebApp.openLink(decoded); // Telegram Mini App में खोलने के लिए
+      } else {
+        // fallback — अगर बाहर है
         window.location.href = decoded;
-      }).catch(err => {
-        console.error("Ad failed or skipped:", err);
-      });
+      }
+
+    }).catch(err => {
+      console.error("Ad failed or skipped:", err);
     });
   });
+});
 });
 </script></body>"""
 }
