@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 @app.route('/server2/', defaults={'path': ''}, methods=['GET', 'POST', 'OPTIONS'])
 @app.route('/server2/<path:path>', methods=['GET', 'POST', 'OPTIONS'])
-def proxy(path):
+def proxy12(path):
     target_url = f"https://9mod.com/{path}"
 
     # Forward query parameters
