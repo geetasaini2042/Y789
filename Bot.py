@@ -1,7 +1,139 @@
 from flask import Flask, Response, request
 import requests
 
+from flask_cors import CORS
+
 app = Flask(__name__)
+CORS(app)  # Allow all origins
+
+
+
+# Replace list: key = original text, value = replacement text
+replace_list1 = {
+    "https://9mod.com/wp-content/uploads/2024/06/number-9-small.png": "https://geetasaini2042.github.io/17uio/Data/App2/wp-content/uploads/2024/06/number-9-small.png",
+    '<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">':"""
+     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+     <script src='//libtl.com/sdk.js' data-zone='9429528' data-sdk='show_9429528'></script>
+""",
+    "https://9mod.com/wp-includes/": "https://geetasaini2042.github.io/17uio/Data/App2/wp-includes/",
+    "https://9mod.com/wp-content/themes/9mod/": "https://geetasaini2042.github.io/17uio/Data/App2/wp-content/themes/9mod/",
+    "https://9mod.com/": "/server2/",
+    "https://9mod.com" : "/server2",
+    "9MOD.COM" :  "PREMIUM HUB",
+    "/?s" : "/server2/",
+    "/server2/cloudflare/ads-images/":"https://sainipankaj12.serv00.net/TelegramStream.php?file_id=AgACAgUAAyEGAASQTtqMAAJL1mhNbj_k7-DVAAH8jtdND-LL19ylswACA8UxG1bUaFZdU24p1KlgsAAIAQADAgADeQAHHgQ&file_type=photo&",
+    "/cdn-cgi/challenge-platform/":"/server2/cdn-cgi/challenge-platform/",
+    "/server2/cdn-cgi/challenge-platform/h/b/jsd/":"https://sainipankaj12.serv00.net/App/Pre/getmod.php/cdn-cgi/challenge-platform/h/b/jsd/",
+    '/server2/wp-content/uploads/': 'https://9mod.com/wp-content/uploads/',
+    '/server2/tips/': 'https://geetasaini2042.github.io/17uio/Data/App2/tips/',
+    '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8513869610548047"':"",
+    'crossorigin="anonymous"></script>':"",
+    'class="adsbygoogle"':"",
+     'style="display:block"':"",
+     'data-ad-client="ca-pub-8513869610548047"':"",
+     'data-ad-slot="7007044823"':"",
+     'data-ad-format="auto"':"",
+     'data-full-width-responsive="true"':"",
+     '(adsbygoogle = window.adsbygoogle || []).push({});':"",
+     '<ins' :"",
+     '></ins>':"""<div style="width:100%; text-align:center; margin:10px 0;">
+  <a href="https://otieu.com/4/9111282" target="_blank" rel="noopener noreferrer">
+    <img src="https://geetasaini2042.github.io/17uio/Data/App/cloudflare/ads-images/PREMIUM%20HUB-ADS5.png" 
+         alt="Advertisement" 
+         style="max-width:100%; height:auto; border-radius:12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
+  </a>
+</div>""",
+    """</body>""":"""
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".download-button").forEach(button => {
+    const originalEncoded = button.getAttribute("data-href");
+    let decodedUrl = atob(originalEncoded);
+
+    // अगर URL के अंत में /1 नहीं है, तो जोड़ें
+    if (!decodedUrl.endsWith("/1")) {
+      if (decodedUrl.endsWith("/")) {
+        decodedUrl += "1";
+      } else {
+        decodedUrl += "/1";
+      }
+    }
+
+    const newEncoded = btoa(decodedUrl);
+    button.setAttribute("data-href", newEncoded);
+    console.log("Updated data-href:", newEncoded);
+  });
+
+  // एड के बाद रीडायरेक्ट करें
+  document.querySelectorAll(".download-button").forEach(button => {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      show_9429528().then(() => {
+        const decoded = atob(this.getAttribute("data-href"));
+        window.location.href = decoded;
+      }).catch(err => {
+        console.error("Ad failed or skipped:", err);
+      });
+    });
+  });
+});
+</script></body>"""
+}
+
+@app.route('/server2/', defaults={'path': ''}, methods=['GET', 'POST', 'OPTIONS'])
+@app.route('/server2/<path:path>', methods=['GET', 'POST', 'OPTIONS'])
+def proxy(path):
+    target_url = f"https://9mod.com/{path}"
+
+    # Forward query parameters
+    if request.query_string:
+        target_url += '?' + request.query_string.decode()
+
+    try:
+        # Handle preflight CORS request
+        if request.method == 'OPTIONS':
+            response = Response()
+            response.headers['Access-Control-Allow-Origin'] = '*'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+            return response
+
+        # Choose request method
+        if request.method == 'GET':
+            upstream_response = requests.get(target_url, headers={
+                "User-Agent": request.headers.get('User-Agent', 'Mozilla/5.0')
+            })
+
+        elif request.method == 'POST':
+            upstream_response = requests.post(target_url,
+                headers={"Content-Type": request.headers.get("Content-Type", "application/json")},
+                data=request.get_data()
+            )
+
+        else:
+            return Response("Method not allowed", status=405)
+
+        content = upstream_response.text
+
+        # Text-based content replace (e.g., HTML/JS/CSS)
+        if 'text' in upstream_response.headers.get('Content-Type', '') or 'application/javascript' in upstream_response.headers.get('Content-Type', ''):
+            for original, replacement in replace_list1.items():
+                content = content.replace(original, replacement)
+
+            response = Response(content, status=upstream_response.status_code)
+        else:
+            # Binary files or others
+            response = Response(upstream_response.content, status=upstream_response.status_code)
+
+        # Set content type and CORS
+        response.headers['Content-Type'] = upstream_response.headers.get('Content-Type', 'text/html')
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
+
+    except Exception as e:
+        return Response(f"Error: {str(e)}", status=500)
+
 
 # Replace list: key = original text, value = replacement text
 replace_list = {
