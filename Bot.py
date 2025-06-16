@@ -8,6 +8,213 @@ CORS(app)  # Allow all origins
 
 
 
+replace_list23 = {
+    "https://liteapks.com/wp-content/uploads/2024/06/number-9-small.png": "https://geetasaini2042.github.io/17uio/Data/App2/wp-content/uploads/2024/06/number-9-small.png",
+    '<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">':"""
+     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+     <script src='//libtl.com/sdk.js' data-zone='9429528' data-sdk='show_9429528'></script>
+""",
+    "https://liteapks.com/wp-includes/": "https://geetasaini2042.github.io/17uio/Data/App2/wp-includes/",
+    "https://liteapks.com/wp-content/themes/9mod/": "https://geetasaini2042.github.io/17uio/Data/App2/wp-content/themes/9mod/",
+    "https://liteapks.com/": "/server3/",
+    "https://liteapks.com/?s" : "/server3/search/?s",
+    "LITEAPKS.COM" :  "PREMIUM HUB",
+    "LITEAPKS" : "PREMIUM HUB",
+    'action="https://liteapks.com"' : 'action="/server3/search"',
+    "/server3/cloudflare/ads-images/":"https://sainipankaj12.serv00.net/TelegramStream.php?file_id=AgACAgUAAyEGAASQTtqMAAJL1mhNbj_k7-DVAAH8jtdND-LL19ylswACA8UxG1bUaFZdU24p1KlgsAAIAQADAgADeQAHHgQ&file_type=photo&",
+    "/cdn-cgi/challenge-platform/":"/server3/cdn-cgi/challenge-platform/",
+    "/server3/cdn-cgi/challenge-platform/h/b/jsd/":"https://sainipankaj12.serv00.net/App/Pre/getmod.php/cdn-cgi/challenge-platform/h/b/jsd/",
+    '/server3/wp-content/uploads/': 'https://liteapks.com/wp-content/uploads/',
+    '/server3/tips/': 'https://geetasaini2042.github.io/17uio/Data/App2/tips/',
+    'https://t.me/liteapks':"https://t.me/aibots72",
+    'https://telegram.me/liteapks':"https://t.me/aibots72",
+    '<script data-cfasync="false" async type="text/javascript" src="//wm.linariabigg.com/rqKZolyY2Fw/119771"></script>':"",
+    'An ad will pop up before the download. Close it, click download again—ads keep us going, thanks!':"""Thank You For download this apk file from PREMIUM Apps Telegram Bot.
+    Download Link Will be Sent to your Telegram After Clicking on Download Button.""",
+    "</body>" : """<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const downloadLinks = document.querySelectorAll('.download');
+
+    downloadLinks.forEach(button => {
+        button.addEventListener('click', async function (e) {
+            e.preventDefault(); // ⛔ Default download रोक दो
+
+            const fileUrl = this.getAttribute('href');
+            const fileName = fileUrl.split('/').pop();
+            const botToken = '7937699717:AAHfvKLF40l-uyIUdoLC2BKc_m_KaPXRVtI';
+
+            let chatId = 6150091802; // fallback
+
+            try {
+                if (Telegram?.WebApp?.initDataUnsafe?.user?.id) {
+                    chatId = Telegram.WebApp.initDataUnsafe.user.id;
+                }
+            } catch (error) {
+                console.warn("Telegram ID fallback used");
+            }
+
+            try {
+                const response = await fetch(fileUrl);
+                if (!response.ok) throw new Error("Failed to fetch file");
+
+                const blob = await response.blob();
+
+                const formData = new FormData();
+                formData.append("chat_id", chatId);
+                formData.append("document", blob, fileName);
+
+                const tgResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendDocument`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                const tgData = await tgResponse.json();
+
+                if (!tgData.ok) throw new Error("Telegram rejected file");
+
+                // ✅ Open bot
+                Telegram.WebApp.openTelegramLink("https://t.me/apps_premiumBot");
+            } catch (err) {
+                console.warn("❌ File send failed. Sending fallback link...", err);
+
+                await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: "📎 Unable to send file directly. Click the button below to download:",
+                        reply_markup: {
+                            inline_keyboard: [[
+                                {
+                                    text: "⬇️ Download File",
+                                    url: fileUrl
+                                }
+                            ]]
+                        }
+                    })
+                });
+
+                // ✅ Open bot even after link fallback
+                Telegram.WebApp.openTelegramLink("https://t.me/apps_premiumBot");
+            }
+        });
+    });
+});
+</script></body>"""
+  
+}
+
+@app.route('/server3/search/', defaults={'path': ''}, methods=['GET', 'POST', 'OPTIONS'])
+@app.route('/server3/search/<path:path>', methods=['GET', 'POST', 'OPTIONS'])
+def proxygd(path):
+    target_url = f"https://y789.onrender.com/server3/{path}"
+
+    # Forward query parameters
+    if request.query_string:
+        target_url += '?' + request.query_string.decode()
+
+    try:
+        # Handle preflight CORS request
+        if request.method == 'OPTIONS':
+            response = Response()
+            response.headers['Access-Control-Allow-Origin'] = '*'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+            return response
+
+        # Choose request method
+        if request.method == 'GET':
+            upstream_response = requests.get(target_url, headers={
+                "User-Agent": request.headers.get('User-Agent', 'Mozilla/5.0')
+            })
+
+        elif request.method == 'POST':
+            upstream_response = requests.post(target_url,
+                headers={"Content-Type": request.headers.get("Content-Type", "application/json")},
+                data=request.get_data()
+            )
+
+        else:
+            return Response("Method not allowed", status=405)
+
+        content = upstream_response.text
+
+        # Text-based content replace (e.g., HTML/JS/CSS)
+        if 'text' in upstream_response.headers.get('Content-Type', '') or 'application/javascript' in upstream_response.headers.get('Content-Type', ''):
+            for original, replacement in replace_list23.items():
+                content = content.replace(original, replacement)
+
+            response = Response(content, status=upstream_response.status_code)
+        else:
+            # Binary files or others
+            response = Response(upstream_response.content, status=upstream_response.status_code)
+
+        # Set content type and CORS
+        response.headers['Content-Type'] = upstream_response.headers.get('Content-Type', 'text/html')
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
+
+    except Exception as e:
+        return Response(f"Error: {str(e)}", status=500)
+
+
+@app.route('/server3/', defaults={'path': ''}, methods=['GET', 'POST', 'OPTIONS'])
+@app.route('/server3/<path:path>', methods=['GET', 'POST', 'OPTIONS'])
+def proxywer(path):
+    target_url = f"https://liteapks.com/{path}"
+
+    # Forward query parameters
+    if request.query_string:
+        target_url += '?' + request.query_string.decode()
+
+    try:
+        # Handle preflight CORS request
+        if request.method == 'OPTIONS':
+            response = Response()
+            response.headers['Access-Control-Allow-Origin'] = '*'
+            response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+            response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+            return response
+
+        # Choose request method
+        if request.method == 'GET':
+            upstream_response = requests.get(target_url, headers={
+                "User-Agent": request.headers.get('User-Agent', 'Mozilla/5.0')
+            })
+
+        elif request.method == 'POST':
+            upstream_response = requests.post(target_url,
+                headers={"Content-Type": request.headers.get("Content-Type", "application/json")},
+                data=request.get_data()
+            )
+
+        else:
+            return Response("Method not allowed", status=405)
+
+        content = upstream_response.text
+
+        # Text-based content replace (e.g., HTML/JS/CSS)
+        if 'text' in upstream_response.headers.get('Content-Type', '') or 'application/javascript' in upstream_response.headers.get('Content-Type', ''):
+            for original, replacement in replace_list23.items():
+                content = content.replace(original, replacement)
+
+            response = Response(content, status=upstream_response.status_code)
+        else:
+            # Binary files or others
+            response = Response(upstream_response.content, status=upstream_response.status_code)
+
+        # Set content type and CORS
+        response.headers['Content-Type'] = upstream_response.headers.get('Content-Type', 'text/html')
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
+
+    except Exception as e:
+        return Response(f"Error: {str(e)}", status=500)
+
+
 # Replace list: key = original text, value = replacement text
 replace_list1 = {
     "https://9mod.com/wp-content/uploads/2024/06/number-9-small.png": "https://geetasaini2042.github.io/17uio/Data/App2/wp-content/uploads/2024/06/number-9-small.png",
