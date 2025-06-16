@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 @app.route('/server3/search/', defaults={'path': ''}, methods=['GET', 'POST', 'OPTIONS'])
 @app.route('/server3/search/<path:path>', methods=['GET', 'POST', 'OPTIONS'])
 def proxygd(path):
-    target_url = f"https://y789.onrender.com/server3/{path}"
+    target_url = f"https://y789.onrender.com/server2/{path}"
 
     # Forward query parameters
     if request.query_string:
