@@ -13,6 +13,7 @@ replace_list1 = {
     "https://9mod.com/wp-content/uploads/2024/06/number-9-small.png": "https://geetasaini2042.github.io/17uio/Data/App2/wp-content/uploads/2024/06/number-9-small.png",
     '<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">':"""
      <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+     <script src="https://telegram.org/js/telegram-web-app.js"></script>
      <script src='//libtl.com/sdk.js' data-zone='9429528' data-sdk='show_9429528'></script>
 """,
     "https://9mod.com/wp-includes/": "https://geetasaini2042.github.io/17uio/Data/App2/wp-includes/",
